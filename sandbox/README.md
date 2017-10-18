@@ -20,7 +20,6 @@ The subfolders m1, m2, m3, and m4 that are within this `/sandbox` folder are all
 - Team member #1 (fill in your own name here) will work all of the TODOs in the m1 folder
 - Team member #2 (Derek Grayless) will work all of the TODOs in the m2 folder
 - Team member #3 (Rylan Kammerer) will work all of the TODOs in the m3 folder
-- Team member #4 (fill in your own name here) will work all of the TODOs in the m4 folder
 
 **TODO: 2.**
 Fill in your name above then do a VCS -> Commit.. -> Commit and Push.
