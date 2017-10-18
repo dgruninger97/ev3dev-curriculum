@@ -1,1 +1,1 @@
-This folder has David Gruninger's project modules. Each team member should make a folder within this folder for their project.  Name the folder using your username and put your project code inside your folder.  Example: projects/fisherds/ev3_project.py
+This folder contains David Gruninger's project modules. Each team member should make a folder within this folder for their project.  Name the folder using your username and put your project code inside your folder.  Example: projects/fisherds/ev3_project.py
