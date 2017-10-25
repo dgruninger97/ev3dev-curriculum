@@ -71,9 +71,9 @@ import time
 
 def main():
     print("--------------------------------------------")
-    print("  Drive using input")
+    print("  Timed Driving")
     print("--------------------------------------------")
-    ev3.Sound.speak("Drive using input").wait()
+    ev3.Sound.speak("Timed Driving").wait()
 
     # Connect two large motors on output ports B and C
     left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
@@ -88,14 +88,21 @@ def main():
         sp = int(input("Enter a speed (0 to 900 dps): "))
         distance = int(input("Distance to travel (inches): "))
         angular_velocity = ((sp - .3278)/.155)
+        time_s = (sp * (distance ** -1)) **-1
         left_motor.run_forever(speed_sp=angular_velocity)
         right_motor.run_forever(speed_sp=angular_velocity)
-        time.sleep(sp * (distance**-1))**-1
+        time.sleep(time_s)
         left_motor.stop()
         right_motor.stop(stop_action="brake")
 
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
+
+# ----------------------------------------------------------------------
+# Calls  main  to start the ball rolling.
+# ----------------------------------------------------------------------
+main()
+
 
 
 # TODO: 4. Change the input questions from:
