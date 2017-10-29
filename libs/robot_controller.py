@@ -19,8 +19,8 @@ import time
 class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
     def __init__(self):
-        self.left_motor = ev3.Motor()
-        self.right_motor = ev3.Motor()
+        self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
     def drive_inches(self, inches_target, speed_deg_per_second):
         time_s = 1  # Any value other than 0.
         while time_s != 0:
