@@ -71,7 +71,7 @@ import time
 
 def main():
     print("--------------------------------------------")
-    print("  Timed Driving")
+    print("  Timed Driving 2")
     print("--------------------------------------------")
     ev3.Sound.speak("Timed Driving").wait()
 
@@ -87,13 +87,14 @@ def main():
     while time_s != 0:
         sp = int(input("Enter a speed (0 to 900 dps): "))
         distance = int(input("Distance to travel (inches): "))
-        angular_velocity = ((sp - .3278)/.155)
-        time_s = (sp * (distance ** -1)) **-1
-        left_motor.run_forever(speed_sp=angular_velocity)
-        right_motor.run_forever(speed_sp=angular_velocity)
-        time.sleep(time_s)
+        speed = sp * .011
+        left_motor.run_forever(speed_sp=sp)
+        right_motor.run_forever(speed_sp=sp)
+        time1 = distance / speed
+        time.sleep(time1)
         left_motor.stop()
         right_motor.stop(stop_action="brake")
+        time_s = 0
 
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
