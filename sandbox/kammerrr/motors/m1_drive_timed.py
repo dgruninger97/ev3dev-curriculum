@@ -64,31 +64,6 @@ Authors: David Fisher and PUT_YOUR_NAME_HERE.
 #    print("  Timed Driving")
 #    print("--------------------------------------------")
 #    ev3.Sound.speak("Timed Driving").wait()
-# TODO: 4. Change the input questions from:
-#   Enter a speed for the left motor (0 to 900 dps):
-#   Enter a speed for the right motor (0 to 900 dps):
-#   Enter a time to drive (seconds):
-# to:
-#   Enter a speed (0 to 900 dps):
-#   Distance to travel (inches):
-# TODO: 5. Write the code necessary to make the robot drive at that speed going roughly that distance.
-#   Note, in this module, you are REQUIRED to use the pattern...
-#      run_forever()
-#      time.sleep(some_amount)
-#      stop()
-#   You may NOT use the advanced motor commands at this time like: run_to_abs_pos, run_to_rel_pos, or run_timed.
-# TODO: 6. Modify the program so that it will exit immediately if the answer to   any   question is 0.
-# TODO: 7. Formally test your work. When you think you have the problem complete run these tests to be sure:
-#   200 dps 24 inches (make sure it drives within 6 inches of the target distance)
-#   400 dps 24 inches (make sure it drives within 6 inches of the target distance)
-#   800 dps 24 inches (make sure it drives within 6 inches of the target distance)
-#   400 dps 12 inches (make sure it drives within 3 inches of the target distance)
-#   400 dps 36 inches (make sure it drives within 9 inches of the target distance)
-# Do more tests if you see fit.  Ideally you should be +/- 25% of the target goal.
-#
-# TODO: 8. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
-#
-#  Observation you should make, the pattern run_forever-->time.sleep-->stop naturally blocks code execution until done.
 
 import ev3dev.ev3 as ev3
 import time
@@ -110,16 +85,18 @@ def main():
 
     time_s = 1  # Any value other than 0.
     while time_s != 0:
-        sp_in = int(input("speed"))
+        sp_ang = int(input("dps: "))
+        sp_in = (0.0174533 * 1.3 * sp_ang *.5)
         dis = int(input("Distance in Inches"))
-        time_s = (sp_in * (dis**-1)) ** -1
-        sp_ang = (sp_in - .3278) / .01055
+        time_s = int((sp_in * (dis**-1)) ** -1)
+        print(sp_ang)
+        print(time_s)
         left_motor.run_forever(speed_sp=sp_ang)
         right_motor.run_forever(speed_sp=sp_ang)
         time.sleep(time_s)
         left_motor.stop()
         right_motor.stop(stop_action="brake")
-
+        time_s = 0
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
 
@@ -128,3 +105,28 @@ def main():
 # Calls  main  to start the ball rolling.
 # ----------------------------------------------------------------------
 main()
+# TO DO: 4. Change the input questions from:
+#   Enter a speed for the left motor (0 to 900 dps):
+#   Enter a speed for the right motor (0 to 900 dps):
+#   Enter a time to drive (seconds):
+# to:
+#   Enter a speed (0 to 900 dps):
+#   Distance to travel (inches):
+# TO DO: 5. Write the code necessary to make the robot drive at that speed going roughly that distance.
+#   Note, in this module, you are REQUIRED to use the pattern...
+#      run_forever()
+#      time.sleep(some_amount)
+#      stop()
+#   You may NOT use the advanced motor commands at this time like: run_to_abs_pos, run_to_rel_pos, or run_timed.
+# TODO: 6. Modify the program so that it will exit immediately if the answer to   any   question is 0.
+# TODO: 7. Formally test your work. When you think you have the problem complete run these tests to be sure:
+#   200 dps 24 inches (make sure it drives within 6 inches of the target distance)
+#   400 dps 24 inches (make sure it drives within 6 inches of the target distance)
+#   800 dps 24 inches (make sure it drives within 6 inches of the target distance)
+#   400 dps 12 inches (make sure it drives within 3 inches of the target distance)
+#   400 dps 36 inches (make sure it drives within 9 inches of the target distance)
+# Do more tests if you see fit.  Ideally you should be +/- 25% of the target goal.
+#
+# TODO: 8. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
+#
+#  Observation you should make, the pattern run_forever-->time.sleep-->stop naturally blocks code execution until done.
