@@ -32,18 +32,21 @@ def main():
     while time_s != 0:
         sp = int(input("Enter a speed (0 to 900 dps): "))
         distance = int(input("Distance to travel (inches): "))
-        speed = sp * .011
+        # speed = sp * .011
         degrees_per_inch = 90
         distance_to_travel =  distance * degrees_per_inch
-        left_motor.run_to_rel_pos(position_sp=distance_to_travel, speed_sp=speed)
-        left_motor.stop_action = ev3.Motor.STOP_ACTION_BRAKE
-        right_motor.run_to_rel_pos(position_sp=distance_to_travel, speed_sp=speed)
-        right_motor.stop_action = ev3.Motor.STOP_ACTION_BRAKE
-        ev3.Sound.beep().wait()
-        # time_s = 0
+        left_motor.run_to_rel_pos(position_sp=distance_to_travel, speed_sp=sp)
+        right_motor.run_to_rel_pos(position_sp=distance_to_travel, speed_sp=sp)
+        left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        # left_motor.stop_action = ev3.Motor.STOP_ACTION_BRAKE
+        # right_motor.stop_action = ev3.Motor.STOP_ACTION_BRAKE
+        time_s = 0
 
+    ev3.Sound.beep().wait()
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
+
+main()
 
 # TODO: 3. Add a beep after the drive motors stop (see code below).  Test your code to hear the beep AFTER movement.
 #   ev3.Sound.beep().wait()
