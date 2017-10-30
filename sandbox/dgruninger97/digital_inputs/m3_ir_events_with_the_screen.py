@@ -21,8 +21,8 @@ Which will probably not require you to type the password since sudo was just run
 
 BTW chvt means CHange the Virtual Terminal, and 86ing something means to kick it out.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and David Gruninger.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -70,12 +70,23 @@ def main():
     ev3.Sound.speak("I R events with the Screen").wait()
 
     # TODO: 3. Create a remote control object for channel 1. Add lambda callbacks for:
+    rc1 = ev3.RemoteControl(channel=1)
+    rc1.on_red_up = lambda button_state: handle_red_up_1(button_state, dc)
+    rc1.on_red_down = lambda button_state: handle_red_down_1(button_state, dc)
+    rc1.on_blue_up = lambda button_state: handle_blue_up_1(button_state, dc)
+    rc1.on_blue_down = lambda button_state: handle_blue_down_1(button_state, dc)
     #   .on_red_up    to call handle_red_up_1    (that exist already) with state and dc as parameters
     #   .on_red_down  to call handle_red_down_1  (that exist already) with state and dc as parameters
     #   .on_blue_up   to call handle_blue_up_1   (that exist already) with state and dc as parameters
     #   .on_blue_down to call handle_blue_down_1 (that exist already) with state and dc as parameters
 
     # TODO: 5. Create remote control objects for channels 2, 3, and 4. Add lambda callbacks for on_red_up to each one:
+    rc2 = ev3.RemoteControl(channel=2)
+    rc2.on_red_up = lambda button_state: handle_red_up_2(button_state, dc)
+    rc3 = ev3.RemoteControl(channel=3)
+    rc3.on_red_up = lambda button_state: handle_red_up_3(button_state, dc)
+    rc4 = ev3.RemoteControl(channel=4)
+    rc4.on_red_up = lambda button_state: handle_red_up_4(button_state, dc)
     #   Channel 2's .on_red_up should call handle_red_up_2 (that exist already) with state and dc as parameters
     #   Channel 3's .on_red_up should call handle_red_up_3 (that exist already) with state and dc as parameters
     #   Channel 4's .on_red_up should call handle_red_up_4 (that exist already) with state and dc as parameters
