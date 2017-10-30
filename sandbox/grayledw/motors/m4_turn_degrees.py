@@ -44,7 +44,7 @@ def main():
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
 
-    def turn_degrees()
+
 
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
