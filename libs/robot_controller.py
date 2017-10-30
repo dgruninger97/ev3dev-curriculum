@@ -29,20 +29,33 @@ class Snatch3r(object):
             self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
             self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
             time_s = 0
-        ev3.Sound.beep().wait()
-
+    ev3.Sound.beep().wait()
     def turn_degrees(self, degrees_to_turn, turn_speed):
-        state = 1  # Any value other than 0.
-        while state != 0:
-            ang = degrees_to_turn * 0.0174533
-            dis = ang * 3
-            self.left_motor.run_to_rel_pos(position_sp=(dis/.011) * -1, speed_sp=turn_speed)
-            self.right_motor.run_to_rel_pos(position_sp=(dis/.011), speed_sp=turn_speed)
-            self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
-            state = 0
-        ev3.Sound.beep().wait()
+         state = 1  # Any value other than 0.
+         while state != 0:
+             ang = degrees_to_turn * 0.0174533
+             sp_ang = turn_speed
+             sp_in = sp_ang * 1.3 * 0.0174533 * .5
+             dis = ang * 3
+             time_s = int((sp_in * (dis ** -1)) ** -1)
+             dis_ang = sp_ang * time_s
+             self.left_motor.run_to_rel_pos(position_sp=-1 * dis_ang, speed_sp=sp_ang)
+             self.right_motor.run_to_rel_pos(position_sp=dis_ang, speed_sp=sp_ang)
+             self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+             state = 0
+         ev3.Sound.beep().wait()
+    #     time_s = 1  # Any value other than 0.
+    #     while time_s != 0:
+    #         # angle_time = degrees_to_turn / turn_speed
+    #         self.left_motor.run_to_rel_pos(position_sp=degrees_to_turn, speed_sp=(turn_speed * -1), stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+    #         self.right_motor.run_to_rel_pos(position_sp=degrees_to_turn, speed_sp=(turn_speed), stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+    #         # self.left_motor.speed_sp = turn_speed
+    #         # self.right_motor.speed_sp = -turn_speed
+    #         self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+    #         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+    #         time_s = 0
+    #     ev3.Sound.beep().wait()
 
-    #
 
 
 
