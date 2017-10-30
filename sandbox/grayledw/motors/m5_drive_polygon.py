@@ -34,6 +34,8 @@ def main():
         if edge_length_in == 0:
             break
 
+        robot.polygon(speed_deg_per_second, sides, edge_length_in)
+
         # TODO: 2. Individually implement the code here to use your drive_inches and turn_degrees library methods to
         # drive a polygon with the correct number of sides. (Hint: You will add 3 lines of code. What are they?).
 
