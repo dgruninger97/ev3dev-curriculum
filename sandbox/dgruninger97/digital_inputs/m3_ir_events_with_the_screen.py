@@ -98,10 +98,12 @@ def main():
     while dc.running:
         # TODO: 4. Call the .process() method on your channel 1 RemoveControl object, then review and run your code.
         #   Review the handle functions below to see how they draw to the screen.  They are already finished.
-
+        rc1.process()
         # TODO: 6. Call the .process() method on your channel 2 - 4 RemoveControl objects and demo your code.
         #   Review the handle functions below to see how they draw to the screen.  They are already finished.
-
+        rc2.process()
+        rc3.process()
+        rc4.process()
         # TODO: 7. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
         #
         # Observations you should make, IR buttons work exactly like buttons on the EV3.
