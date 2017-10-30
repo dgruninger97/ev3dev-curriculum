@@ -51,10 +51,5 @@ class Snatch3r(object):
                  self.turn_degrees(degrees_to_turn, speed_deg_per_second)
              time_s = 0
 
-
-
-
-
-
     # TODO: Implement the Snatch3r class as needed when working the sandox exercises
     # (and delete these comments)
