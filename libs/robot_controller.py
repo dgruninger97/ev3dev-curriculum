@@ -42,7 +42,15 @@ class Snatch3r(object):
             state = 0
         ev3.Sound.beep().wait()
 
-    #
+    def polygon(self, speed_deg_per_second, sides, edge_length):
+         degrees_to_turn = (180 - ((sides - 2) * 180) / sides)
+         time_s = 1
+         while time_s != 0:
+             for k in range(sides):
+                 self.drive_inches(edge_length, speed_deg_per_second)
+                 self.turn_degrees(degrees_to_turn, speed_deg_per_second)
+             time_s = 0
+
 
 
 
