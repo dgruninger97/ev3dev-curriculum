@@ -30,6 +30,19 @@ class Snatch3r(object):
             self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
             time_s = 0
         ev3.Sound.beep().wait()
+    def turn_degrees(self, degrees_to_turn, turn_speed):
+        time_s = 1  # Any value other than 0.
+        while time_s != 0:
+            time = degrees_to_turn / turn_speed
+            self.left_motor.speed_sp = turn_speed
+            self.right_motor.speed_sp = -turn_speed
+            self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+            self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+            time_s = 0
+        ev3.Sound.beep().wait()
+
+
+
 
 
     # TODO: Implement the Snatch3r class as needed when working the sandox exercises
