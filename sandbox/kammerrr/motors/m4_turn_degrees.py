@@ -28,6 +28,41 @@ Authors: David Fisher and PUT_YOUR_NAME_HERE.
 #       speed_sp=turn_speed_sp on the left.
 #     Use the run_to_rel_pos, .wait_while(ev3.Motor.STATE_RUNNING) pattern to implement your work (not timed driving)
 #   You will have to experimentally determine the formula for accurate position_sp turn amounts.
+import ev3dev.ev3 as ev3
+import robot_controller as robo
+
+
+def main():
+    # --------------------------------------------------------------
+    # We have already implemented this module for you.
+    # There are no TODOs in the code.  Do NOT modify it.
+    # You are not allowed to make any changes to this code.
+    # --------------------------------------------------------------
+    print("--------------------------------------------")
+    print("Turn degrees")
+    print("--------------------------------------------")
+    ev3.Sound.speak("Turn degrees").wait()
+    robot = robo.Snatch3r()
+
+    while True:
+        turn_speed_sp = int(input("Speed (0 to 900 dps): "))
+        if turn_speed_sp == 0:
+            break
+        degrees_to_turn = int(input("Degrees to turn in degrees (degrees): "))
+        if degrees_to_turn == 0:
+            break
+
+        robot.turn_degrees(degrees_to_turn, turn_speed_sp)
+        ev3.Sound.beep().wait()  # Fun little beep
+
+    print("Goodbye!")
+    ev3.Sound.speak("Goodbye").wait()
+
+
+# ----------------------------------------------------------------------
+# Calls  main  to start the ball rolling.
+# ----------------------------------------------------------------------
+main()
 
 # TODO: 4. Individually implement the code here to use your turn_degrees library method.
 #   Modify the code to ask the user how many degrees they would like to turn
