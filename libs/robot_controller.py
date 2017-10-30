@@ -31,7 +31,8 @@ class Snatch3r(object):
             self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
             time_s = 0
         ev3.Sound.beep().wait()
-"""Moves the robot in a straight path for a given distance"""
+    """Drives in a straight line for a given distance"""
+
     def turn_degrees(self, degrees_to_turn, turn_speed):
         state = 1  # Any value other than 0.
         while state != 0:
@@ -42,7 +43,7 @@ class Snatch3r(object):
             self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
             state = 0
         ev3.Sound.beep().wait()
-"""Turns the robot by a given angle in degrees"""
+
     def polygon(self, speed_deg_per_second, sides, edge_length):
         degrees_to_turn = (180 - ((sides - 2) * 180) / sides)
         time_s = 1
@@ -51,6 +52,6 @@ class Snatch3r(object):
                 self.drive_inches(edge_length, speed_deg_per_second)
                 self.turn_degrees(degrees_to_turn, speed_deg_per_second)
             time_s = 0
-"""A simple method for drive specific polygons"""
+
     # TO DO: Implement the Snatch3r class as needed when working the sandox exercises
     # (and delete these comments)
