@@ -95,13 +95,23 @@ def main():
         state = 1
         while state != 0:
 
+            # if btn.down:
+            #     ev3.Leds.set_color(ev3.Leds.LEFT, led_colors[current_color_index])
+            #     ev3.Leds.set_color(ev3.Leds.RIGHT, led_colors[current_color_index])
+            #     current_color_index+=1
+            #     current_color_index = current_color_index % len(led_colors)
+            #     time.sleep(0.01)
+            #     state = 0
+
             if btn.down:
                 ev3.Leds.set_color(ev3.Leds.LEFT, led_colors[current_color_index])
                 ev3.Leds.set_color(ev3.Leds.RIGHT, led_colors[current_color_index])
-                current_color_index+=1
+                while btn.down:
+                    time.sleep(.01)
+                    state = 0
+                current_color_index += 1
                 current_color_index = current_color_index % len(led_colors)
-                time.sleep(0.01)
-                state = 0
+                time.sleep(.01)
 
 
         # TODO: 5. Formally test your work. When you think you have the problem complete run these tests:
