@@ -42,7 +42,6 @@ class Snatch3r(object):
             state = 0
         ev3.Sound.beep().wait()
 
-    #
 
 
 
