@@ -34,8 +34,8 @@ class Snatch3r(object):
         time_s = 1  # Any value other than 0.
         while time_s != 0:
             angle_time = degrees_to_turn / turn_speed
-            self.left_motor.run_timed(speed_sp=turn_speed, time_sp=angle_time)
-            self.right_motor.run_timed(speed_sp=-turn_speed, time_sp=angle_time)
+            self.left_motor.run_timed(speed_sp=turn_speed, time_sp=angle_time, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+            self.right_motor.run_timed(speed_sp=-turn_speed, time_sp=angle_time, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
             # self.left_motor.speed_sp = turn_speed
             # self.right_motor.speed_sp = -turn_speed
             self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
