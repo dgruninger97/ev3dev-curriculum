@@ -51,7 +51,7 @@ def main():
                   # ev3.Leds.YELLOW,  # Too close to another color in my opinion
                   ev3.Leds.AMBER]
 
-    current_color_index = 0
+    current_color_index = 1
     while True:
         # TODO: 3. Implement the left, right, and up buttons as follows:
         #    When the up button is being pressed:
@@ -91,6 +91,18 @@ def main():
         #   Since you are only allowed to use states, not event callbacks, this last request is a pain, but it's doable
         #     with a while loop that blocks code execution until the down instance variable is False.
         #     Use a time.sleep(0.01) inside the while loop to do nothing but wait for the button to be released.
+
+        state = 1
+        while state != 0:
+
+            if btn.down:
+                ev3.Leds.set_color(ev3.Leds.LEFT, led_colors[current_color_index])
+                ev3.Leds.set_color(ev3.Leds.RIGHT, led_colors[current_color_index])
+                current_color_index+=1
+                current_color_index = current_color_index % len(led_colors)
+                time.sleep(0.01)
+                state = 0
+
 
         # TODO: 5. Formally test your work. When you think you have the problem complete run these tests:
         #   Press Left - Green left LED is on (try holding the button down for a few seconds when you to the press)
