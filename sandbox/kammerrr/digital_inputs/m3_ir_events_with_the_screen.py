@@ -51,7 +51,7 @@ class DataContainer(object):
         self.progress_0 = Image.open("/home/robot/csse120/assets/images/ev3_lego/progress_bar_0.bmp")
         self.progress_50 = Image.open("/home/robot/csse120/assets/images/ev3_lego/progress_bar_50.bmp")
         self.progress_100 = Image.open("/home/robot/csse120/assets/images/ev3_lego/progress_bar_100.bmp")
-        self.teary_eyes = Image.open("/home/robot/csse120/assets/images/ev3_lego/eyes_tear.bmp")
+        self.teary_eyes = Image.open("/home/robot/csse120/assets/images/ev3_lego/goodbye_jeff.bmp")
 
 
 def main():
