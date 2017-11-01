@@ -20,9 +20,13 @@ class Snatch3r(object):
     def __init__(self):
         self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
-
         self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
         self.touch_sensor = ev3.TouchSensor()
+
+        assert self.right_motor
+        assert self.left_motor
+        assert self.touch_sensor
+        assert self.arm_motor
 
     def drive_inches(self, inches_target, speed_deg_per_second):
         """Drives in a straight line for a given distance"""
