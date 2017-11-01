@@ -12,7 +12,6 @@
 """
 
 import ev3dev.ev3 as ev3
-import math
 import time
 
 
@@ -22,7 +21,11 @@ class Snatch3r(object):
         self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
 
+        self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        self.touch_sensor = ev3.TouchSensor()
+
     def drive_inches(self, inches_target, speed_deg_per_second):
+        """Drives in a straight line for a given distance"""
         time_s = 1  # Any value other than 0.
         while time_s != 0:
             self.left_motor.run_to_rel_pos(position_sp=(inches_target / .011), speed_sp=speed_deg_per_second)
@@ -31,9 +34,9 @@ class Snatch3r(object):
             self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
             time_s = 0
         ev3.Sound.beep().wait()
-    """Drives in a straight line for a given distance"""
 
     def turn_degrees(self, degrees_to_turn, turn_speed):
+        """Turns the robot by a set angle"""
         state = 1  # Any value other than 0.
         while state != 0:
             ang = degrees_to_turn * 0.0174533
@@ -43,9 +46,9 @@ class Snatch3r(object):
             self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
             state = 0
         ev3.Sound.beep().wait()
-    """Turns the robot by a set angle"""
 
     def polygon(self, speed_deg_per_second, sides, edge_length):
+        """Drives the robot in a polygon given the number of sides and the side length"""
         degrees_to_turn = (180 - ((sides - 2) * 180) / sides)
         time_s = 1
         while time_s != 0:
@@ -53,56 +56,52 @@ class Snatch3r(object):
                 self.drive_inches(edge_length, speed_deg_per_second)
                 self.turn_degrees(degrees_to_turn, speed_deg_per_second)
             time_s = 0
-    """Drives the robot in a polygon given the number of sides and the side length"""
-
-
 
     # TO DO: Implement the Snatch3r class as needed when working the sandox exercises
     # (and delete these comments)
 
     def arm_calibration(self):
-        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
-        touch_sensor = ev3.TouchSensor()
-        arm_motor.run_forever(speed_sp=900)
-        while touch_sensor.is_pressed == 0:
+        """Calibrates arm"""
+        self.arm_motor.run_forever(speed_sp=900)
+        while self.touch_sensor.is_pressed == 0:
             print('running motor')
             time.sleep(0.01)
-        arm_motor.stop(stop_action="brake")
+        self.arm_motor.stop(stop_action="brake")
         ev3.Sound.beep().wait()
 
         arm_revolutions_for_full_range = 14.2
         deg_for_full_range = arm_revolutions_for_full_range * 360
-        arm_motor.run_to_rel_pos(position_sp=deg_for_full_range * -1)
-        arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        self.arm_motor.run_to_rel_pos(position_sp=deg_for_full_range * -1)
+        self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         print('ready to calibrate')
 
-        arm_motor.position = 0  # Calibrate the down position as 0 (this line is correct as is).
+        self.arm_motor.position = 0  # Calibrate the down position as 0 (this line is correct as is).
 
         ev3.Sound.beep().wait()
 
     def arm_up(self):
-        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
-        touch_sensor = ev3.TouchSensor()
+        """Moves arm up"""
         max_speed = 900
-        arm_motor.run_forever(speed_sp=max_speed)
-        while not touch_sensor.is_pressed:
+        self.arm_motor.run_forever(speed_sp=max_speed)
+        while not self.touch_sensor.is_pressed:
             time.sleep(0.01)
-        arm_motor.stop(stop_action="brake")
+        self.arm_motor.stop(stop_action="brake")
         ev3.Sound.beep().wait()
 
     def arm_down(self):
-        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
-        MAX_SPEED = 900
-        arm_motor.run_to_abs_pos(position_sp=0, speed_sp = MAX_SPEED)
-        arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        arm_motor.stop(stop_action='brake')
+        """Move arm down"""
+        max_speed = 900
+        self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=max_speed)
+        self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        self.arm_motor.stop(stop_action='brake')
         ev3.Sound().beep().wait()
 
-
     def shutdown(self, dc):
+        """Shuts down the running program on call"""
         dc.running = False
 
     def move_tread(self, mov_speed, rc1):
+        """Moves treads forward on button_state of ir remote"""
         while rc1.red_up & rc1.blue_up:
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
@@ -134,6 +133,7 @@ class Snatch3r(object):
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
 
     def move_tread_back(self, mov_speed, rc1):
+        """Moves treads forward on button_state of ir remote"""
         while rc1.red_down & rc1.blue_down:
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
