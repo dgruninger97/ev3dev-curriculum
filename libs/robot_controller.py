@@ -90,13 +90,9 @@ class Snatch3r(object):
         arm_motor.stop(stop_action="brake")
         ev3.Sound.beep().wait()
 
-
     def arm_down(self):
         arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
-        touch_sensor = ev3.TouchSensor()
         MAX_SPEED = 900
-        arm_motor.run_to_abs_pos(position_sp = 0, speed_sp = MAX_SPEED)
-        while not touch_sensor.is_pressed:
-            time.sleep(.01)
+        arm_motor.run_to_abs_pos(position_sp=0, speed_sp = MAX_SPEED)
         arm_motor.stop(stop_action='brake')
         ev3.Sound().beep().wait()
