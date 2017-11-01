@@ -102,11 +102,42 @@ class Snatch3r(object):
     def shutdown(self, dc):
         dc.running = False
 
-    def move_left_tread(self, mov_speed, rc1):
+    def move_tread(self, mov_speed, rc1):
+        while rc1.red_up & rc1.blue_up:
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+            self.left_motor.run_forever(speed_sp=mov_speed)
+            self.right_motor.run_forever(speed_sp=mov_speed)
+            while rc1.red_up & rc1.blue_up:
+                time.sleep(.01)
+            self.right_motor.stop()
+            self.left_motor.stop()
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
 
-        self.left_motor.run_forever(speed_sp=mov_speed)
+        while rc1.blue_up:
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+            self.right_motor.run_forever(speed_sp=mov_speed)
+            while rc1.blue_up:
+                print(rc1.blue_up)
+                time.sleep(.01)
+            self.right_motor.stop()
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+
         while rc1.red_up:
-            print(rc1.red_up)
-            time.sleep(.01)
-        self.left_motor.stop()
+            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+            self.left_motor.run_forever(speed_sp=mov_speed)
+            while rc1.red_up:
+                print(rc1.blue_up)
+                time.sleep(.01)
+            self.left_motor.stop()
+            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
 
+
+    def move_tread(self, mov_speed, rc1):
+
+        self.right_motor.run_forever(speed_sp=mov_speed)
+        while rc1.blue_up:
+            print(rc1.blue_up)
+            time.sleep(.01)
+        self.right_motor.stop()
