@@ -108,21 +108,25 @@ def main():
 def handle_red_up_1(button_state, robot, mov_speed):
     if button_state:
         robot.move_left_tread(mov_speed, button_state)
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
 
 
 def handle_blue_up_1(button_state, robot, mov_speed):
     if button_state:
         robot.move_right_tread(mov_speed, button_state)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
 
 
 def handle_red_down_1(button_state, robot, mov_speed):
     if button_state:
         robot.move_left_tread_back(mov_speed, button_state)
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
 
 
 def handle_blue_down_1(button_state, robot, mov_speed):
     if button_state:
         robot.move_right_tread_back(mov_speed, button_state)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
 
 
 def handle_arm_up_button(button_state, robot):
