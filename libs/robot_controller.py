@@ -55,6 +55,8 @@ class Snatch3r(object):
             time_s = 0
     """Drives the robot in a polygon given the number of sides and the side length"""
 
+
+
     # TO DO: Implement the Snatch3r class as needed when working the sandox exercises
     # (and delete these comments)
 
@@ -76,6 +78,16 @@ class Snatch3r(object):
 
         arm_motor.position = 0  # Calibrate the down position as 0 (this line is correct as is).
 
+        ev3.Sound.beep().wait()
+
+    def arm_up(self):
+        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        touch_sensor = ev3.TouchSensor()
+        max_speed = 900
+        arm_motor.run_forever(speed_sp=max_speed)
+        while not touch_sensor.is_pressed:
+            time.sleep(0.01)
+        arm_motor.stop(stop_action="brake")
         ev3.Sound.beep().wait()
 
 
