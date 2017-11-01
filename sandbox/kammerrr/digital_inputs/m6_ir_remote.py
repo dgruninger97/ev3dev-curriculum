@@ -53,7 +53,7 @@ def main():
     print(" - Press the Back button on EV3 to exit")
     print("--------------------------------------------")
     ev3.Sound.speak("I R Remote")
-    mov_speed = int(input("Speed(dps): "))
+    mov_speed = 600
     ev3.Leds.all_off()  # Turn the leds off
     robot = robo.Snatch3r()
     dc = DataContainer()
@@ -64,10 +64,12 @@ def main():
     rc1 = ev3.RemoteControl(channel=1)
     rc2 = ev3.RemoteControl(channel=2)
 
-    rc1.on_red_up = lambda button_state: handle_red_up_1(button_state, robot, mov_speed)
+    rc1.on_red_up = lambda button_state: handle_red_up_1(button_state, robot, mov_speed, rc1)
     rc1.on_red_down = lambda button_state: handle_red_down_1(button_state, robot, mov_speed)
     rc1.on_blue_up = lambda button_state: handle_blue_up_1(button_state, robot, mov_speed)
     rc1.on_blue_down = lambda button_state: handle_blue_down_1(button_state, robot, mov_speed)
+
+
 
     rc2.on_red_up = lambda button_state: handle_arm_up_button(button_state, robot)
     rc2.on_red_down = lambda button_state: handle_arm_down_button(button_state, robot)
@@ -105,10 +107,11 @@ def main():
 # Observations you should make, IR buttons are a fun way to control the robot.
 
 
-def handle_red_up_1(button_state, robot, mov_speed):
+def handle_red_up_1(button_state, robot, mov_speed, rc1):
     if button_state:
-        robot.move_left_tread(mov_speed)
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+        robot.move_left_tread(mov_speed, rc1)
+
 
 
 def handle_blue_up_1(button_state, robot, mov_speed):
