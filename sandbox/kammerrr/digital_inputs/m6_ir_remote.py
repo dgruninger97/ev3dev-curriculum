@@ -69,8 +69,6 @@ def main():
     rc1.on_blue_up = lambda button_state: handle_blue_up_1(button_state, robot, mov_speed, rc1)
     rc1.on_blue_down = lambda button_state: handle_blue_down_1(button_state, robot, mov_speed, rc1)
 
-
-
     rc2.on_red_up = lambda button_state: handle_arm_up_button(button_state, robot)
     rc2.on_red_down = lambda button_state: handle_arm_down_button(button_state, robot)
     rc2.on_blue_up = lambda button_state: handle_calibrate_button(button_state, robot)
