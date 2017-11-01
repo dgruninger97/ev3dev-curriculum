@@ -69,9 +69,9 @@ def main():
     rc1.on_blue_up = lambda button_state: handle_blue_up_1(button_state, robot, mov_speed)
     rc1.on_blue_down = lambda button_state: handle_blue_down_1(button_state, robot, mov_speed)
 
-    rc2.on_blue_up = lambda button_state: handle_arm_up_button(button_state,robot)
-    rc2.on_blue_down = lambda button_state: handle_arm_down_button(button_state, robot)
-    rc2.on_red_down = lambda button_state: handle_calibrate_button(button_state, robot)
+    rc2.on_red_up = lambda button_state: handle_arm_up_button(button_state, robot)
+    rc2.on_red_down = lambda button_state: handle_arm_down_button(button_state, robot)
+    rc2.on_blue_up = lambda button_state: handle_calibrate_button(button_state, robot)
     # For our standard shutdown button.
     btn = ev3.Button()
     btn.on_backspace = lambda state: handle_shutdown(state, dc)
@@ -91,7 +91,7 @@ def main():
     # been tested and shown to work, then have that person commit their work.  All other team members need to do a
     # VCS --> Update project...
     # Once the library is implemented any team member should be able to run his code as stated in todo3.
-    robot.shutdown()
+    robot.shutdown(dc)
 
 # ----------------------------------------------------------------------
 # Event handlers
