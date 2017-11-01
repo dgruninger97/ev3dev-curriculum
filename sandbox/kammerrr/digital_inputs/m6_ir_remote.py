@@ -132,6 +132,7 @@ def handle_blue_down_1(button_state, robot, mov_speed):
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
 
 
+
 def handle_arm_up_button(button_state, robot):
     """
     Moves the arm up when the button is pressed.
