@@ -101,3 +101,8 @@ class Snatch3r(object):
     def shutdown(self, dc):
         dc.running = False
 
+    def move_left_tread(self, mov_speed, button_state):
+        self.left_motor.run_forever(speed_sp=mov_speed)
+        while button_state:
+            time.sleep(.01)
+        self.left_motor.stop('coast')
