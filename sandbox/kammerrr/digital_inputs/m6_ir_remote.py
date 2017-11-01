@@ -64,7 +64,7 @@ def main():
     rc1 = ev3.RemoteControl(channel=1)
     rc2 = ev3.RemoteControl(channel=2)
 
-    rc1.on_red_up = lambda button_state: handle_red_up_1(button_state, robot, mov_speed, rc1)
+    rc1.on_red_up = lambda button_state: handle_red_up_1(robot, mov_speed, rc1)
     rc1.on_red_down = lambda button_state: handle_red_down_1(button_state, robot, mov_speed)
     rc1.on_blue_up = lambda button_state: handle_blue_up_1(button_state, robot, mov_speed)
     rc1.on_blue_down = lambda button_state: handle_blue_down_1(button_state, robot, mov_speed)
@@ -78,7 +78,7 @@ def main():
     btn = ev3.Button()
     btn.on_backspace = lambda state: handle_shutdown(state, dc)
 
-    robot.arm_calibration()  # Start with an arm calibration in this program.
+    #robot.arm_calibration()  # Start with an arm calibration in this program.
 
     while dc.running:
         # TODO: 5. Process the RemoteControl objects.

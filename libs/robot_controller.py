@@ -106,7 +106,7 @@ class Snatch3r(object):
 
         self.left_motor.run_forever(speed_sp=mov_speed)
         while rc1.red_up:
-            print(rc1.button_state)
+            print(rc1.red_up)
             time.sleep(.01)
         self.left_motor.stop()
 
