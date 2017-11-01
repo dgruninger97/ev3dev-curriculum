@@ -101,8 +101,11 @@ class Snatch3r(object):
     def shutdown(self, dc):
         dc.running = False
 
-    def move_left_tread(self, mov_speed):
+    def move_left_tread(self, button_state, mov_speed, rc1):
+
         self.left_motor.run_forever(speed_sp=mov_speed)
-        time.sleep(.01)
-        self.left_motor.stop("brake")
+        while rc1.button_state:
+            print(rc1.button_state)
+            time.sleep(.01)
+        self.left_motor.stop()
 
