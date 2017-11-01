@@ -94,5 +94,6 @@ class Snatch3r(object):
         arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
         MAX_SPEED = 900
         arm_motor.run_to_abs_pos(position_sp=0, speed_sp = MAX_SPEED)
+        arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         arm_motor.stop(stop_action='brake')
         ev3.Sound().beep().wait()
