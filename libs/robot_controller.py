@@ -103,4 +103,6 @@ class Snatch3r(object):
 
     def move_left_tread(self, mov_speed):
         self.left_motor.run_forever(speed_sp=mov_speed)
+        time.sleep(.01)
+        self.left_motor.stop("brake")
 
