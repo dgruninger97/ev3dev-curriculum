@@ -61,8 +61,8 @@ def main():
     # TODO: 4. Add the necessary IR handler callbacks as per the instructions above.
     # Remote control channel 1 is for driving the crawler tracks around (none of these functions exist yet below).
     # Remote control channel 2 is for moving the arm up and down (all of these functions already exist below).
-    rc1 = ev3.RemoteControl(Channel=1)
-    rc2 = ev3.RemoteControl(Channel=2)
+    rc1 = ev3.RemoteControl(channel=1)
+    rc2 = ev3.RemoteControl(channel=2)
 
     rc1.on_red_up = lambda button_state: handle_red_up_1(button_state, robot, mov_speed)
     rc1.on_red_down = lambda button_state: handle_red_down_1(button_state, robot, mov_speed)
@@ -107,7 +107,10 @@ def main():
 
 def handle_red_up_1(button_state, robot, mov_speed):
     if button_state:
-        robot.move_left_tread(mov_speed, button_state)
+        robot.move_left_tread(mov_speed)
+        while button_state:
+            time.sleep(.01)
+        robot.left_motor.stop('coast')
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
 
 
