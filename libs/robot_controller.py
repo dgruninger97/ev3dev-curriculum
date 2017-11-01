@@ -57,3 +57,24 @@ class Snatch3r(object):
 
     # TO DO: Implement the Snatch3r class as needed when working the sandox exercises
     # (and delete these comments)
+    def arm_calibration(self):
+        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        touch_sensor = ev3.TouchSensor()
+        arm_motor.run_forever(speed_sp=900)
+        while touch_sensor.is_pressed == 0:
+            print('running motor')
+            time.sleep(0.01)
+        arm_motor.stop(stop_action="brake")
+        ev3.Sound.beep().wait()
+
+        arm_revolutions_for_full_range = 14.2
+        deg_for_full_range = arm_revolutions_for_full_range * 360
+        arm_motor.run_to_rel_pos(position_sp=deg_for_full_range * -1)
+        arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        print('ready to calibrate')
+
+        arm_motor.position = 0  # Calibrate the down position as 0 (this line is correct as is).
+
+        ev3.Sound.beep().wait()
+
+

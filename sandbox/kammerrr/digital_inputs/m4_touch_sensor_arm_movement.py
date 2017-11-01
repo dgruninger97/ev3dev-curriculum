@@ -8,6 +8,7 @@ Authors: David Fisher and Rylan Kammerer.
 
 import ev3dev.ev3 as ev3
 import time
+from PIL import Image
 
 MAX_SPEED = 900
 
@@ -47,6 +48,7 @@ def main():
             print(command_to_run, "is not a known command. Please enter a valid choice.")
 
     print("Goodbye!")
+    Image.open("/home/robot/csse120/assets/images/ev3_lego/goodbye_jeff.bmp")
     ev3.Sound.speak("Goodbye").wait()
 
 
