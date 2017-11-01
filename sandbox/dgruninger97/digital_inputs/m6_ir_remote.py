@@ -90,7 +90,6 @@ def main():
     ch1.on_red_up = lambda: handle_on_red_up()
     ch1.on_red_down = lambda : handle_on_red_down()
     ch1.on_blue_up = lambda : handle_on_blue_up()
-    ch1.on_blue_down = lambda : handle_on_blue_down()
     ch2.on_red_up = lambda: handle_arm_up_button()
     ch2.on_red_down= lambda : handle_arm_down_button()
     ch2.on_blue_up = lambda : handle_arm_up_button()
