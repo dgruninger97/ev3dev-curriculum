@@ -53,6 +53,7 @@ def main():
     print(" - Press the Back button on EV3 to exit")
     print("--------------------------------------------")
     ev3.Sound.speak("I R Remote")
+    mov_speed = input("Enter speed")
 
     ev3.Leds.all_off()  # Turn the leds off
     robot = robo.Snatch3r()
@@ -87,27 +88,28 @@ def main():
 # Movement event handlers have not been provided.
 # ----------------------------------------------------------------------
 # TODO: 6. Implement the IR handler callbacks handlers.
-    ch1.on_red_up = lambda: handle_on_red_up()
-    ch1.on_red_down = lambda : handle_on_red_down()
-    ch1.on_blue_up = lambda : handle_on_blue_up()
-    ch2.on_red_up = lambda: handle_arm_up_button()
+    ch1.on_red_up = lambda button_state, mov_speed: handle_on_red_up()
+    ch1.on_red_down = lambda button_state, mov_speed: handle_on_red_down()
+    ch1.on_blue_up = lambda button_state, mov_speed: handle_on_blue_up()
+    ch1.on_blue_down = lambda button_state, mov_speed: handle_on_blue_down()
+    ch2.on_red_up = lambda button_state, mov_speed: handle_arm_up_button()
     ch2.on_red_down= lambda : handle_arm_down_button()
     ch2.on_blue_up = lambda : handle_arm_up_button()
     ch2.on_blue_down = lambda : handle_arm_down_button()
 # TODO: 7. When your program is complete, call over a TA or instructor to sign your checkoff sheet and do a code review.
 #
 # Observations you should make, IR buttons are a fun way to control the robot.
-def handle_on_red_up():
-    move_left_tread()
+def handle_on_red_up(button_state, mov_speed):
+    move_left_tread(mov_speed, button_state)
 
-def handle_on_red_down():
-    move_left_tread()
+def handle_on_red_down(button_state, mov_speed):
+    move_left_tread(mov_speed, button_state)
 
-def handle_on_blue_up():
-    move_left_tread()
+def handle_on_blue_up(button_state, mov_speed):
+    move_left_tread(mov_speed, button_state)
 
-def handle_on_blue_down():
-    move_left_tread()
+def handle_on_blue_down(button_state, mov_speed):
+    move_left_tread(mov_speed, button_state)
 def handle_arm_up_button(button_state, robot):
     """
     Moves the arm up when the button is pressed.
