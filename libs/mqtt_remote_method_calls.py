@@ -132,6 +132,7 @@ import paho.mqtt.client as mqtt
 LEGO_NUMBER = 3  # TODO: Set your LEGO_NUMBER
 
 
+
 class MqttClient(object):
     """Helper class to make it easier to work with MQTT subscriptions and publications."""
 
