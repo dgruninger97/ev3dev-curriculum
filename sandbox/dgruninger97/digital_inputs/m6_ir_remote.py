@@ -98,7 +98,7 @@ def main():
 # TODO: 7. When your program is complete, call over a TA or instructor to sign your checkoff sheet and do a code review.
 #
 # Observations you should make, IR buttons are a fun way to control the robot.
-def handle_on_red_up(): 
+def handle_on_red_up():
     move_left_tread()
 
 def handle_on_red_down():
