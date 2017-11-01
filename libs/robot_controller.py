@@ -57,6 +57,7 @@ class Snatch3r(object):
 
     # TO DO: Implement the Snatch3r class as needed when working the sandox exercises
     # (and delete these comments)
+
     def arm_calibration(self):
         arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
         touch_sensor = ev3.TouchSensor()
