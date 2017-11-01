@@ -99,17 +99,17 @@ def main():
 # TODO: 7. When your program is complete, call over a TA or instructor to sign your checkoff sheet and do a code review.
 #
 # Observations you should make, IR buttons are a fun way to control the robot.
-def handle_on_red_up(button_state, mov_speed):
-    move_left_tread(mov_speed, button_state)
+def handle_on_red_up(mov_speed):
+    move_left_tread(mov_speed)
 
-def handle_on_red_down(button_state, mov_speed):
-    move_left_tread(mov_speed, button_state)
+def handle_on_red_down(mov_speed):
+    move_left_tread(mov_speed)
 
-def handle_on_blue_up(button_state, mov_speed):
-    move_left_tread(mov_speed, button_state)
+def handle_on_blue_up(mov_speed):
+    move_left_tread(mov_speed)
 
-def handle_on_blue_down(button_state, mov_speed):
-    move_left_tread(mov_speed, button_state)
+def handle_on_blue_down(mov_speed):
+    move_left_tread(mov_speed)
 def handle_arm_up_button(button_state, robot):
     """
     Moves the arm up when the button is pressed.
