@@ -98,6 +98,7 @@ class Snatch3r(object):
         arm_motor.stop(stop_action='brake')
         ev3.Sound().beep().wait()
 
+
     def shutdown(self, dc):
         dc.running = False
 
