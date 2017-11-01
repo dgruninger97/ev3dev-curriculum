@@ -53,7 +53,7 @@ def main():
     print(" - Press the Back button on EV3 to exit")
     print("--------------------------------------------")
     ev3.Sound.speak("I R Remote")
-    mov_speed = input("Enter speed")
+    mov_speed = 600
 
     ev3.Leds.all_off()  # Turn the leds off
     robot = robo.Snatch3r()
@@ -99,8 +99,10 @@ def main():
 # TODO: 7. When your program is complete, call over a TA or instructor to sign your checkoff sheet and do a code review.
 #
 # Observations you should make, IR buttons are a fun way to control the robot.
-def handle_on_red_up(mov_speed):
-    move_left_tread(mov_speed)
+def handle_on_red_up(mov_speed, button_state):
+    if button_state:
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+        robot.move_left_tread(mov_speed, button_state)
 
 def handle_on_red_down(mov_speed):
     move_left_tread(mov_speed)
