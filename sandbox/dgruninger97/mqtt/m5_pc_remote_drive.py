@@ -164,6 +164,16 @@ def pressed(event, mqtt_client, left_speed_entry, right_speed_entry):
         mqtt_client.send_message("right_move", [int(left_speed_entry.get()), int(right_speed_entry.get())])
     elif event.keysym == "Left":
         mqtt_client.send_message("left_move", [int(left_speed_entry.get()), int(right_speed_entry.get())])
+    elif event.keysym == 'q':
+        mqtt_client.send_message("shutdown")
+        mqtt_client.close()
+        exit()
+    elif event.keysym == 'u':
+        print("arm_up")
+        mqtt_client.send_message("arm_up")
+    elif event.keysym == 'j':
+        print("arm_down")
+        mqtt_client.send_message("arm_down")
 # Quit and Exit button callbacks
 def quit_program(mqtt_client, shutdown_ev3):
     if shutdown_ev3:
