@@ -62,17 +62,26 @@ def main():
     # DONE: 4. Add the necessary IR handler callbacks as per the instructions above.
     # Remote control channel 1 is for driving the crawler tracks around (none of these functions exist yet below).
     # Remote control channel 2 is for moving the arm up and down (all of these functions already exist below).
-    ch1 = ev3.RemoteControl(channel=1)
-    ch2 = ev3.RemoteControl(channel=2)
+    rc1 = ev3.RemoteControl(channel=1)
+    rc2 = ev3.RemoteControl(channel=2)
     # For our standard shutdown button.
     btn = ev3.Button()
     btn.on_backspace = lambda state: handle_shutdown(state, dc)
 
     robot.arm_calibration()  # Start with an arm calibration in this program.
-
+    rc1.on_red_up = lambda button_state: handle_on_red_up(button_state, robot, mov_speed, rc1)
+    rc1.on_red_down = lambda button_state: handle_on_red_down(button_state, robot, mov_speed, rc1)
+    rc1.on_blue_up = lambda button_state: handle_on_blue_up(button_state, robot, mov_speed, rc1)
+    rc1.on_blue_down = lambda button_state: handle_on_blue_down(button_state, robot, mov_speed, rc1)
+    rc2.on_red_up = lambda button_state: handle_arm_up_button(button_state, robot)
+    rc2.on_red_down= lambda button_state : handle_arm_down_button(button_state, robot)
+    rc2.on_blue_up = lambda button_state : handle_arm_up_button(button_state, robot)
+    rc2.on_blue_down = lambda button_state : handle_arm_down_button(button_state, robot)
     while dc.running:
         # DONE: 5. Process the RemoteControl objects.
         btn.process()
+        rc1.process()
+        rc2.process()
         time.sleep(0.01)
 
     # DONE: 2. Have everyone talk about this problem together then pick one  member to modify libs/robot_controller.py
@@ -88,31 +97,27 @@ def main():
 # Movement event handlers have not been provided.
 # ----------------------------------------------------------------------
 # TODO: 6. Implement the IR handler callbacks handlers.
-    ch1.on_red_up = lambda button_state, mov_speed: handle_on_red_up()
-    ch1.on_red_down = lambda button_state, mov_speed: handle_on_red_down()
-    ch1.on_blue_up = lambda button_state, mov_speed: handle_on_blue_up()
-    ch1.on_blue_down = lambda button_state, mov_speed: handle_on_blue_down()
-    ch2.on_red_up = lambda button_state, mov_speed: handle_arm_up_button()
-    ch2.on_red_down= lambda : handle_arm_down_button()
-    ch2.on_blue_up = lambda : handle_arm_up_button()
-    ch2.on_blue_down = lambda : handle_arm_down_button()
+
 # TODO: 7. When your program is complete, call over a TA or instructor to sign your checkoff sheet and do a code review.
 #
 # Observations you should make, IR buttons are a fun way to control the robot.
-def handle_on_red_up(mov_speed, button_state):
+def handle_on_red_up(button_state, robot, mov_speed, rc1):
     if button_state:
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
-        robot.move_left_tread(mov_speed, button_state)
+        robot.move_tread(mov_speed, rc1)
 
-def handle_on_red_down(mov_speed):
-    move_left_tread(mov_speed)
-
-def handle_on_blue_up(mov_speed):
-    move_left_tread(mov_speed)
-
-def handle_on_blue_down(mov_speed):
-    move_left_tread(mov_speed)
-def handle_arm_up_button(button_state, robot):
+def handle_on_red_down(button_state, robot, mov_speed, rc1):
+    if button_state:
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
+        robot.move_tread_back(mov_speed, rc1)
+def handle_on_blue_up(button_state, robot, mov_speed, rc1):
+    if button_state:
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+        robot.move_tread(mov_speed, rc1)
+def handle_on_blue_down(button_state, robot, mov_speed, rc1):
+    if button_state:
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
+        robot.move_tread_back(mov_speed, rc1)
     """
     Moves the arm up when the button is pressed.
 
@@ -120,9 +125,16 @@ def handle_arm_up_button(button_state, robot):
       :type button_state: bool
       :type robot: robo.Snatch3r
     """
+def handle_arm_up_button(button_state, robot):
+    """
+    Moves the arm down when the button is pressed.
+
+    Type hints:
+      :type button_state: bool
+      :type robot: robo.Snatch3r
+    """
     if button_state:
         robot.arm_up()
-
 
 def handle_arm_down_button(button_state, robot):
     """
@@ -148,7 +160,7 @@ def handle_calibrate_button(button_state, robot):
         robot.arm_calibration()
 
 
-def handle_shutdown(button_state, dc):
+def handle_shutdown(state, dc):
     """
     Exit the program.
 
@@ -156,7 +168,7 @@ def handle_shutdown(button_state, dc):
       :type button_state: bool
       :type dc: DataContainer
     """
-    if button_state:
+    if state:
         dc.running = False
 
 # ----------------------------------------------------------------------
