@@ -127,23 +127,23 @@ def main():
 # Arm command callbacks
 def handle_forward_button(mqtt_client, left_speed_entry, right_speed_entry):
     print("foward button")
-    mqtt_client.send_message("forward", [mqtt_client, left_speed_entry.get(), right_speed_entry.get()])
+    mqtt_client.send_message("forward", [left_speed_entry.get(), right_speed_entry.get()])
 
 def handle_left_button(mqtt_client, left_speed_entry, right_speed_entry):
     print("left button")
-    mqtt_client.send_message("left", [mqtt_client, left_speed_entry.get(), right_speed_entry.get()])
+    mqtt_client.send_message("left", [left_speed_entry.get(), right_speed_entry.get()])
 
 def handle_right_button(mqtt_client, left_speed_entry, right_speed_entry):
     print("right button")
-    mqtt_client.send_message("right",[mqtt_client, left_speed_entry.get(), right_speed_entry.get()])
+    mqtt_client.send_message("right",[left_speed_entry.get(), right_speed_entry.get()])
 
 def handle_back_button(mqtt_client, left_speed_entry, right_speed_entry):
     print("back button")
-    mqtt_client.send_message("backward", [mqtt_client, left_speed_entry.get(), right_speed_entry])
+    mqtt_client.send_message("backward", [left_speed_entry.get(), right_speed_entry.get()])
 
 def handle_stop_button(mqtt_client):
     print("stop button")
-    mqtt_client.send_message("stop", [mqtt_client])
+    mqtt_client.send_message("stop")
 
 def send_up(mqtt_client):
     print("arm_up")
