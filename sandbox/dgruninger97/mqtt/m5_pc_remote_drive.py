@@ -109,7 +109,8 @@ def main():
     e_button = ttk.Button(main_frame, text="Exit")
     e_button.grid(row=6, column=2)
     e_button['command'] = (lambda: quit_program(mqtt_client, True))
-
+    root.bind_all('<KeyPress>', lambda event: pressed(event, mqtt_client, left_speed_entry, right_speed_entry))
+    root.bind_all('<KeyRelease>', lambda event: handle_stop_button(mqtt_client))
     root.mainloop()
 
 
@@ -153,7 +154,16 @@ def send_down(mqtt_client):
     print("arm_down")
     mqtt_client.send_message("arm_down")
 
-
+def pressed(event, mqtt_client, left_speed_entry, right_speed_entry):
+    print("Pressed")
+    if event.keysym == "Up":
+        mqtt_client.send_message("forward", [left_speed_entry.get(), right_speed_entry.get()])
+    elif event.keysym == "Down":
+        mqtt_client.send_message("backward", [int(left_speed_entry.get()), int(right_speed_entry.get())])
+    elif event.keysym == "Right":
+        mqtt_client.send_message("right_move", [int(left_speed_entry.get()), int(right_speed_entry.get())])
+    elif event.keysym == "Left":
+        mqtt_client.send_message("left_move", [int(left_speed_entry.get()), int(right_speed_entry.get())])
 # Quit and Exit button callbacks
 def quit_program(mqtt_client, shutdown_ev3):
     if shutdown_ev3:

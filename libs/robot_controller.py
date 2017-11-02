@@ -193,7 +193,7 @@ class Snatch3r(object):
         if left_speed_entry==right_speed_entry:
             left_speed_entry = left_speed_entry * -1
             self.left_motor.run_forever(speed_sp=left_speed_entry)
-            self.right_motor.run_forever(speep_sp=right_speed_entry)
+            self.right_motor.run_forever(speed_sp=right_speed_entry)
         else:
             self.left_motor.run_forever(speed_sp = left_speed_entry)
             self.right_motor.run_forever(speed_sp = right_speed_entry)
