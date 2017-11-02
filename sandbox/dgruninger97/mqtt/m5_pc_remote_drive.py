@@ -27,7 +27,7 @@ Authors: David Fisher and David Gruninger.
 
 import tkinter
 from tkinter import ttk
-
+import robot_controller as rc
 import mqtt_remote_method_calls as com
 
 
@@ -128,6 +128,7 @@ def main():
 def handle_forward_button(mqtt_client, left_speed_entry, right_speed_entry):
     print("foward button")
     mqtt_client.send_message("forward", [left_speed_entry.get(), right_speed_entry.get()])
+
 
 def handle_left_button(mqtt_client, left_speed_entry, right_speed_entry):
     print("left button")
