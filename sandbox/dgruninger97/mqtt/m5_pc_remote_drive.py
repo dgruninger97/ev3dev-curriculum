@@ -131,15 +131,15 @@ def handle_forward_button(mqtt_client, left_speed_entry, right_speed_entry):
 
 def handle_left_button(mqtt_client, left_speed_entry, right_speed_entry):
     print("left button")
-    mqtt_client.send_message("left", [left_speed_entry.get(), right_speed_entry.get()])
+    mqtt_client.send_message("left_move", [int(left_speed_entry.get()), int(right_speed_entry.get())])
 
 def handle_right_button(mqtt_client, left_speed_entry, right_speed_entry):
     print("right button")
-    mqtt_client.send_message("right",[left_speed_entry.get(), right_speed_entry.get()])
+    mqtt_client.send_message("right_move",[int(left_speed_entry.get()), int(right_speed_entry.get())])
 
 def handle_back_button(mqtt_client, left_speed_entry, right_speed_entry):
     print("back button")
-    mqtt_client.send_message("backward", [left_speed_entry.get(), right_speed_entry.get()])
+    mqtt_client.send_message("backward", [int(left_speed_entry.get()), int(right_speed_entry.get())])
 
 def handle_stop_button(mqtt_client):
     print("stop button")
