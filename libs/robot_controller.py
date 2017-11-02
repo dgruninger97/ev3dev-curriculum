@@ -22,7 +22,7 @@ class Snatch3r(object):
         self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
         self.touch_sensor = ev3.TouchSensor()
-
+        self.running = None
         assert self.right_motor
         assert self.left_motor
         assert self.touch_sensor
@@ -100,9 +100,9 @@ class Snatch3r(object):
         self.arm_motor.stop(stop_action='brake')
         ev3.Sound().beep().wait()
 
-    def shutdown(self, dc):
+    def shutdown(self):
         """Shuts down the running program on call"""
-        dc.running = False
+        self.running = False
 
     def move_tread(self, mov_speed, rc1):
         """Moves treads forward on button_state of ir remote"""
@@ -167,3 +167,8 @@ class Snatch3r(object):
                 time.sleep(.01)
             self.left_motor.stop()
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+
+    def loop_forever(self):
+        self.running = True
+        while self.running:
+            time.sleep(0.1)
