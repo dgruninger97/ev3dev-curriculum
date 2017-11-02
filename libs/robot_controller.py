@@ -175,15 +175,16 @@ class Snatch3r(object):
 
     def forward(self, left_speed_entry, right_speed_entry):
         #if forward_button.is_pressed:
-            self.left_motor.run_forever(speed_sp = left_speed_entry)
-            self.right_motor.run_forever(speed_sp = right_speed_entry)
+        self.left_motor.run_forever(speed_sp = left_speed_entry)
+        self.right_motor.run_forever(speed_sp = right_speed_entry)
 
     def backward(self, left_speed_entry, right_speed_entry):
-        #if backward_button.is_pressed:
-            left_speed_entry = left_speed_entry * -1
-            right_speed_entry = right_speed_entry * -1
-            self.left_motor.run_forever(speed_sp = left_speed_entry)
-            self.right_motor.run_forever(speed_sp = right_speed_entry)
+        # if backward_button.is_pressed:
+        left_speed_entry = left_speed_entry * -1
+        right_speed_entry = right_speed_entry * -1
+        self.left_motor.run_forever(speed_sp=left_speed_entry)
+        self.right_motor.run_forever(speed_sp=right_speed_entry)
+
     def stop(self):
         self.left_motor.stop()
         self.right_motor.stop()
