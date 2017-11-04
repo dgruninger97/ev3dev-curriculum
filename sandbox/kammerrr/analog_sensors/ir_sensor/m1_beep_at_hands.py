@@ -21,7 +21,7 @@ def main():
     print("--------------------------------------------")
     print(" Beep at hands")
     print("--------------------------------------------")
-       ev3.Sound.speak("Beep at hands")
+    ev3.Sound.speak("Beep at hands")
     print("Press the touch sensor to exit this program.")
 
     robot = robo.Snatch3r()
@@ -30,14 +30,16 @@ def main():
     # the code below works to monitor the touch_sensor.
 
     while not robot.touch_sensor.is_pressed:
-        # TODO: 2. Implement the module as described in the opening comment block.
+        # TO DO: 2. Implement the module as described in the opening comment block.
         # It is recommended that you add to your Snatch3r class's constructor the ir_sensor, as shown
         #   self.ir_sensor = ev3.InfraredSensor()
         #   assert self.ir_sensor
         # Then here you can use a command like robot.ir_sensor.proximity
-
-        time.sleep(0.1)
-
+        if robot.ir_sensor.proximity <= 10:
+            ev3.Sound.beep().wait()
+            print(robot.ir_sensor.proximity)
+            time.sleep(1.5)
+        time.sleep(.1)
     # TODO: 3. Call over a TA or instructor to sign your team's checkoff sheet.
     #
     # Observations you should make, the instance variable robot.ir_sensor.proximity is always updating with a distance.
