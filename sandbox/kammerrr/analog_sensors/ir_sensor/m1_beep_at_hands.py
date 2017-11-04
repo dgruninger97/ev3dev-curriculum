@@ -8,8 +8,8 @@ Check every 0.1 seconds for a hand and print the proximity value each check.
 
 Setup the program to continue to run until the user presses the touch sensor.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.  February 2017.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Rylan Kammerer.  February 2017.
+"""  # TO DO: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -21,7 +21,7 @@ def main():
     print("--------------------------------------------")
     print(" Beep at hands")
     print("--------------------------------------------")
-    ev3.Sound.speak("Beep at hands")
+       ev3.Sound.speak("Beep at hands")
     print("Press the touch sensor to exit this program.")
 
     robot = robo.Snatch3r()
