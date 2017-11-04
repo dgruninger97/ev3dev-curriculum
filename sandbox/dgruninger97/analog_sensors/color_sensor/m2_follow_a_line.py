@@ -12,8 +12,8 @@ f - Follow the line until the touch sensor is pressed.  You are allowed to assum
      Extra - For a harder challenge could you drive on the black line and handle left or right turns?
 q - Quit
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and David Gruninger.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -71,7 +71,12 @@ def follow_the_line(robot, white_level, black_level):
       :type white_level: int
       :type black_level: int
     """
-
+    while not robot.touch_sensor:
+        robot.left_motor.run_forever(speed_sp = 300)
+        robot.right_motor.run_forever(speed_sp = 300)
+        while robot.color_sensor.reflected_light_intensity > black_level:
+            robot.left_motor.turn_degrees(-30, 300)
+        time.sleep(0.01)
 
 
     # TODO: 5. Use the calibrated values for white and black to calculate a light threshold to determine if your robot
