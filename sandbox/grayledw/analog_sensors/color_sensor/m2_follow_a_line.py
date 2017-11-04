@@ -29,8 +29,8 @@ def main():
 
     # TODO: 4: After running the code set the default white and black levels to a better initial guess.
     #   Once you have the values hardcoded to resonable numbers here you don't really need the w and b commands below.
-    white_level = 50
-    black_level = 40
+    white_level = 86
+    black_level = 10
     robot = robo.Snatch3r()
 
     while True:
@@ -41,14 +41,14 @@ def main():
             # As discussed in the prior module, it is recommended that you've added to your Snatch3r class's constructor
             # the color_sensor, as shown:
             #   self.color_sensor = ev3.ColorSensor()
-            #   assert self.color_sensor
+            #   assert self.color_sensorcd
             # Then here you can use a command like robot.color_sensor.reflected_light_intensity
-            robot.color_sensor.reflected_light_intensity =
+            white_level = robot.color_sensor.reflected_light_intensity
             print("New white level is {}.".format(white_level))
         elif command_to_run == 'b':
             print("Calibrate the black light level")
             # TODO: 3. Read the reflected_light_intensity property of the color sensor and set black_level
-            robot.color_sensor.reflected_light_intensity =
+            black_level = robot.color_sensor.reflected_light_intensity
             print("New black level is {}.".format(black_level))
         elif command_to_run == 'f':
             print("Follow the line until the touch sensor is pressed.")
@@ -73,7 +73,31 @@ def follow_the_line(robot, white_level, black_level):
       :type white_level: int
       :type black_level: int
     """
-    while not robot.touch_sensor:
+    while not robot.touch_sensor.is_pressed:
+        print('inside first while')
+        while robot.color_sensor.reflected_light_intensity <= black_level:
+            print('inside black level while loop')
+            robot.left_motor.run_forever(speed_sp=300)
+            robot.right_motor.run_forever(speed_sp=300)
+            if robot.touch_sensor.is_pressed == 1:
+                robot.left_motor.stop()
+                robot.right_motor.stop()
+                break
+        while robot.color_sensor.reflected_light_intensity >= white_level:
+            print('inside white level white level while loop')
+            robot.left_motor.stop()
+            robot.right_motor.stop()
+            robot.turn_degrees(-30, 300)
+            if robot.touch_sensor.is_pressed == 1:
+                robot.left_motor.stop()
+                robot.right_motor.stop()
+                break
+        if robot.touch_sensor.is_pressed == 1:
+            robot.left_motor.stop()
+            robot.right_motor.stop()
+            break
+
+
 
 
     # TODO: 5. Use the calibrated values for white and black to calculate a light threshold to determine if your robot

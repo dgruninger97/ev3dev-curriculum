@@ -96,7 +96,7 @@ def drive_to_color(button_state, robot, color_to_seek):
         # Then here you can use a command like robot.color_sensor.color to check the value
         robot.left_motor.run_forever(speed_sp=300)
         robot.right_motor.run_forever(speed_sp=300)
-        while robot.color_sensor != color_to_seek:
+        while robot.color_sensor.color != color_to_seek:
             time.sleep(0.01)
         robot.left_motor.stop()
         robot.right_motor.stop()
