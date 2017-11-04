@@ -9,8 +9,8 @@ function gets the robot to that location it will stop the robot and return.  Wit
 prompted if they want to find the beacon again (presumably you move it first) or quit.
 
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and David Gruninger.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 import traceback
 
 import ev3dev.ev3 as ev3
@@ -60,7 +60,8 @@ def seek_beacon(robot):
 
     forward_speed = 300
     turn_speed = 100
-
+    ev3.RemoteControl(channel=1)
+    beacon_seeker = ev3.BeaconSeeker
     while not robot.touch_sensor.is_pressed:
         # The touch sensor can be used to abort the attempt (sometimes handy during testing)
 
@@ -93,13 +94,21 @@ def seek_beacon(robot):
                 # Close enough of a heading to move forward
                 print("On the right heading. Distance: ", current_distance)
                 # You add more!
-
-
-
-
-
-
-
+            if math.fabs(current_heading) < 2:
+                if current_distance == 0:
+                    print('You found it')
+                    return True
+                else:
+                    robot.forward(forward_speed, forward_speed)
+            if math.fabs(current_heading) > 2 and math.fabs(current_heading) < 10:
+                print("Adjusting heading: ", current_heading)
+                if math.fabs(current_heading) < 0:
+                    robot.left_move(-turn_speed, turn_speed)
+                if math.fabs(current_heading) > 0:
+                    robot.right_move(turn_speed, -turn_speed)
+            if math.fabs(current_heading) > 10:
+                print('Heading too far off')
+                return False
         time.sleep(0.2)
 
     # The touch_sensor was pressed to abort the attempt if this code runs.
