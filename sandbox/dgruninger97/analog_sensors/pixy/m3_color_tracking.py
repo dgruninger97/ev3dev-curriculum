@@ -5,8 +5,8 @@ the robot so that it is always facing the color signature.  You will need to tea
 implement the code, then make the robot always face the color as you move it around.  The robot will only spin and never
 move forwards or backwards.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and David Gruninger.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -28,7 +28,14 @@ def main():
     turn_speed = 100
 
     while not robot.touch_sensor.is_pressed:
-
+        print("value1: X", robot.pixy.value(1))
+        print("value2: Y", robot.pixy.value(2))
+        print("value3: Width", robot.pixy.value(3))
+        print("value4: Height", robot.pixy.value(4))
+        x = robot.pixy.value(1)
+        y = robot.pixy.value(2)
+        width = robot.pixy.value(3)
+        height = robot.pixy.value(4)
         # TODO: 2. Read the Pixy values for x and y
         # Print the values for x and y
 
@@ -37,13 +44,18 @@ def main():
         #   If the Pixy x value is greater than 170 turn right (turn_speed, -turn_speed)
         #   If the Pixy x value is between 150 and 170 stop the robot
         # Continuously track the color until the touch sensor is pressed to end the program.
-
-
+        if x > 150:
+            robot.left_move((-1 * turn_speed), turn_speed)
+        if x < 170:
+            robot.right_move(turn_speed, (-1 * turn_speed))
+        if x >= 150 and x <= 170:
+            robot.stop()
 
         time.sleep(0.25)
 
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
+    robot.stop()
 
 # TODO: 4. Call over a TA or instructor to sign your team's checkoff sheet.
 #

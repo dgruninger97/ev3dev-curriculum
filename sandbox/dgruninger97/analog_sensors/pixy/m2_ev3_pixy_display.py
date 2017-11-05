@@ -3,8 +3,8 @@
 The goal of this module is to practice using the Pixy and MQTT at the same time.  This module will send data from the
 EV3 to the PC.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.  February 2017.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and David Gruninger.  February 2017.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -26,15 +26,24 @@ def main():
 
     robot = robo.Snatch3r()
     robot.pixy.mode = "SIG1"
+    mqtt_client = com.MqttClient()
+    mqtt_client.connect_to_pc('mosquitto.csse.rose-hulman.edu', 3)
 
     while not robot.touch_sensor.is_pressed:
 
         # TODO: 3. Read the Pixy values for x, y, width, and height
         # Print the values (much like the print_pixy_readings example)
-
+        print("value1: X", robot.pixy.value(1))
+        print("value2: Y", robot.pixy.value(2))
+        print("value3: Width", robot.pixy.value(3))
+        print("value4: Height", robot.pixy.value(4))
+        x = robot.pixy.value(1)
+        y = robot.pixy.value(2)
+        width = robot.pixy.value(3)
+        height = robot.pixy.value(4)
         # TODO: 4. Send the Pixy values to the PC by calling the on_rectangle_update method
         # If you open m2_pc_pixy_display you can see the parameters for that method [x, y, width, height]
-
+        mqtt_client.send_message('on_rectangle_update', [x, y, width, height])
 
 
 
