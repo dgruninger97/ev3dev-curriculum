@@ -47,6 +47,7 @@ def main():
         if x < 170:
             robot.right_move(turn_speed, -1 * turn_speed)
             print("right")
+
         if x >= 150 and x <= 170:
             robot.stop()
             print("stop")
