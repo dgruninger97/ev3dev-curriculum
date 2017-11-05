@@ -25,6 +25,7 @@ class Snatch3r(object):
         self.touch_sensor = ev3.TouchSensor()
         self.color_sensor = ev3.ColorSensor()
         self.ir_sensor = ev3.InfraredSensor()
+        self.pixy = ev3.Sensor(driver_name="pixy-lego")
         self.running = None
         assert self.right_motor
         assert self.left_motor
@@ -32,6 +33,7 @@ class Snatch3r(object):
         assert self.arm_motor
         assert self.color_sensor
         assert self.ir_sensor
+        assert self.pixy
 
     def drive_inches(self, inches_target, speed_deg_per_second):
         """Drives in a straight line for a given distance"""
