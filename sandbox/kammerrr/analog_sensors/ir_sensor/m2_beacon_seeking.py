@@ -60,13 +60,13 @@ def seek_beacon(robot):
 
     forward_speed = 300
     turn_speed = 100
-
+    beacon = ev3.BeaconSeeker(channel=1)
     while not robot.touch_sensor.is_pressed:
         # The touch sensor can be used to abort the attempt (sometimes handy during testing)
 
         # TODO: 3. Use the beacon_seeker object to get the current heading and distance.
-        current_heading = 0  # use the beacon_seeker heading
-        current_distance = 0  # use the beacon_seeker distance
+        current_heading = beacon.heading  # use the beacon_seeker heading
+        current_distance = beacon.distance  # use the beacon_seeker distance
         if current_distance == -128:
             # If the IR Remote is not found just sit idle for this program until it is moved.
             print("IR Remote not found. Distance is -128")
@@ -92,17 +92,44 @@ def seek_beacon(robot):
             if math.fabs(current_heading) < 2:
                 # Close enough of a heading to move forward
                 print("On the right heading. Distance: ", current_distance)
+
                 # You add more!
+                if current_distance <= 1:
+                    robot.drive_inches(2.5, forward_speed)
+                    robot.stop()
+                    print("beacon found")
+                    ev3.Sound.speak("beacon found").wait()
+                    return True
+                else:
+                    robot.forward(forward_speed, forward_speed)
+                    if current_distance <= 1:
 
+                        robot.stop()
 
+            elif math.fabs(current_heading) > 2 and math.fabs(current_heading) < 10:
+                if current_heading > 0:
+                    robot.left_move(turn_speed, turn_speed)
+                    # while math.fabs(current_heading) > 2:
+                    #     time.sleep(.01)
+                    # robot.left_motor.stop()
+                    # robot.right_motor.stop()
+                    # time.sleep(.1)
+                    if math.fabs(current_heading) < 2:
+                        robot.stop()
+                    time.sleep(.1)
+                if current_heading < 0:
+                    robot.right_move(turn_speed, turn_speed)
+                    if math.fabs(current_heading) < 2:
+                        robot.stop()
 
-
-
-
-
+                    time.sleep(.1)
+            elif math.fabs(current_heading) > 10:
+                print("too far")
+                return False
         time.sleep(0.2)
 
-    # The touch_sensor was pressed to abort the attempt if this code runs.
+    # The touch_sensor
+    # was pressed to abort the attempt if this code runs.
     print("Abandon ship!")
     robot.stop()
     return False
