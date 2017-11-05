@@ -211,17 +211,17 @@ class Snatch3r(object):
         else:
             self.left_motor.run_forever(speed_sp = left_speed_entry)
             self.right_motor.run_forever(speed_sp = right_speed_entry)
-    def seek_beacon(self, robot):
+    def seek_beacon(self):
         forward_speed = 300
         turn_speed = 100
         beacon_seeker = ev3.BeaconSeeker(channel=1)
-        while not robot.touch_sensor.is_pressed:
+        while not self.touch_sensor.is_pressed:
             current_heading = beacon_seeker.heading  # use the beacon_seeker heading
             current_distance = beacon_seeker.distance
             if current_distance == -128:
                 # If the IR Remote is not found just sit idle for this program until it is moved.
                 print("IR Remote not found. Distance is -128")
-                robot.right_move(turn_speed, turn_speed)
+                self.right_move(turn_speed, turn_speed)
             else:
                 if math.fabs(current_heading) < 2:
                     # Close enough of a heading to move forward
@@ -229,31 +229,31 @@ class Snatch3r(object):
                     # You add more!
                     if current_distance == 0:
                         print('You found it')
-                        robot.stop()
+                        self.stop()
                         return True
                     if current_distance > 0:
-                        robot.forward(forward_speed, forward_speed)
+                        self.forward(forward_speed, forward_speed)
                         if current_distance <= 1:
-                            robot.drive_inches(2, forward_speed)
-                            robot.stop()
+                            self.drive_inches(4, forward_speed)
+                            self.stop()
                             ev3.Sound.speak('beacon found')
                             time.sleep(3)
                             return True
                 if math.fabs(current_heading) > 2 and math.fabs(current_heading) < 10:
                     print("Adjusting heading: ", current_heading)
                     if current_heading > 0:
-                        robot.left_move(turn_speed, turn_speed)
+                        self.left_move(turn_speed, turn_speed)
                         if math.fabs(current_heading) < 2:
-                            robot.stop()
+                            self.stop()
                     if current_heading < 0:
-                        robot.right_move(turn_speed, turn_speed)
+                        self.right_move(turn_speed, turn_speed)
                         if math.fabs(current_heading) < 2:
-                            robot.stop()
+                            self.stop()
                 if math.fabs(current_heading) > 10:
-                    robot.right_move(turn_speed, turn_speed)
+                    self.right_move(turn_speed, turn_speed)
             time.sleep(0.2)
 
             # The touch_sensor was pressed to abort the attempt if this code runs.
-            print("Abandon ship!")
-            robot.stop()
-            return False
+        print("Abandon ship!")
+        self.stop()
+        return False

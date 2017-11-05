@@ -99,7 +99,7 @@ def seek_beacon(robot):
                 if current_distance > 0:
                     robot.forward(forward_speed, forward_speed)
                     if current_distance <= 1:
-                        robot.drive_inches(2, forward_speed)
+                        robot.drive_inches(4, forward_speed)
                         robot.stop()
                         ev3.Sound.speak('beacon found')
                         time.sleep(3)
