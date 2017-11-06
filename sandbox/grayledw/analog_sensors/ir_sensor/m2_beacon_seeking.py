@@ -103,9 +103,9 @@ def seek_beacon(robot):
                 if current_distance > 0:
                     robot.forward(forward_speed, forward_speed)
                     if current_distance <= 1:
-                        robot.drive_inches(2, forward_speed)
+                        robot.drive_inches(3, forward_speed)
                         robot.stop()
-                        robot.arm_calibration()
+                        time.sleep(3)
                         return True
             if abs(current_heading) > 2 and abs(current_heading) < 10:
                 print("Adjusting current_heading:", current_heading)
