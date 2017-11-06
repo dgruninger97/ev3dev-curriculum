@@ -236,7 +236,7 @@ class Snatch3r(object):
                     if current_distance > 0:
                         self.forward(forward_speed, forward_speed)
                         if current_distance <= 1:
-                            self.drive_inches(4, forward_speed)
+                            self.drive_inches(3, forward_speed)
                             self.stop()
                             ev3.Sound.speak('beacon found')
                             time.sleep(3)
