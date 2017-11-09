@@ -75,7 +75,7 @@ class Snatch3r(object):
         """Calibrates arm"""
         self.arm_motor.run_forever(speed_sp=900)
         while self.touch_sensor.is_pressed == 0:
-            print('running motor')
+            # print('running motor')
             time.sleep(0.01)
         self.arm_motor.stop(stop_action="brake")
         ev3.Sound.beep().wait()

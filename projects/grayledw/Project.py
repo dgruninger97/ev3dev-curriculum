@@ -3,17 +3,55 @@ import time
 import robot_controller as robo
 import mqtt_remote_method_calls as com
 
+
 COLOR_NAMES = ["None", "Black", "Blue", "Green", "Yellow", "Red", "White", "Brown"]
+
 
 class MyDelegate(object):
 
-    def __init__(self):
+    def __init__(self, robot):
         self.running = True
+        self.robot = robot
 
+    def drive_to_lego_color_pickup(self, color_to_drive_and_pickup):
+        print("Received color", color_to_drive_and_pickup)
+        self.robot.arm_calibration()
+        self.robot.left_motor.run_forever(speed_sp=300)
+        self.robot.right_motor.run_forever(speed_sp=300)
+        print(self.robot.color_sensor.color)
+        while self.robot.color_sensor.color != COLOR_NAMES[color_to_drive_and_pickup]:
+            time.sleep(0.01)
+        self.robot.left_motor.stop()
+        self.robot.right_motor.stop()
+        ev3.Sound.speak("Found" + COLOR_NAMES[color_to_drive_and_pickup]).wait()
+        self.robot.turn_degrees(90, 300)
+        while self.robot.ir_sensor.proximity <= 36.3:
+            self.robot.left_motor.run_forever(speed_sp=300)
+            self.robot.right_motor.run_forever(speed_sp=300)
+            time.sleep(0.01)
+        self.robot.left_motor.stop()
+        self.robot.right_motor.stop()
+        self.robot.drive_inches(20, 300)
+        # robot.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        # robot.left_motor.stop()
+        # robot.right_motor.stop()
+        self.robot.arm_up()
+        # robot.drive_inches(26, 300)
+        self.robot.left_motor.run_forever(speed_sp=300)
+        self.robot.right_motor.run_forever(speed_sp=300)
+        while self.robot.color_sensor.color != color_to_drive_and_pickup:
+            time.sleep(0.01)
+        self.robot.left_motor.stop()
+        self.robot.right_motor.stop()
+        ev3.Sound.speak("Found" + COLOR_NAMES[color_to_drive_and_pickup]).wait()
+
+        arm_down_to_drop_in_bucket(self.robot)
+        ev3.Sound.speak("You have successfully placed the" + str(
+            color_to_drive_and_pickup.get()) + "colored Lego in its bucket")
 
 def main():
-    my_delegate = MyDelegate()
     robot = robo.Snatch3r()
+    my_delegate = MyDelegate(robot)
     mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_pc("mosquitto.csse.rose-hulman.edu", 3)
 
