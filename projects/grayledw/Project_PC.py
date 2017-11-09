@@ -86,7 +86,7 @@ def main():
 
 def button_callbacks_for_ev3(mqtt_client, color_to_drive_and_pickup_entry):
     if color_to_drive_and_pickup_entry.get() == "Red":
-        print("Please press the Up Button on the eV3 Robot to drive to Red1")
+        print("Please press the Up Button on the eV3 Robot to drive to Red")
         mqtt_client.send_message("drive_to_lego_color_pickup", [color_to_drive_and_pickup_entry.get()])
 
 
