@@ -52,13 +52,15 @@ class MyDelegate(object):
             color_to_seek = 6
         self.robot.left_motor.run_forever(speed_sp=300)
         self.robot.right_motor.run_forever(speed_sp=300)
-        while self.robot.color_sensor.color != COLOR_NAMES[color_to_seek]:
+        while True:
             print(color_to_seek)
             print(self.robot.color_sensor.color)
+            if self.robot.color_sensor.color == color_to_seek:
+                break
             time.sleep(0.01)
         self.robot.left_motor.stop()
         self.robot.right_motor.stop()
-        ev3.Sound.speak("Found " + color_to_seek)
+        ev3.Sound.speak("Found " + COLOR_NAMES[color_to_seek])
         time.sleep(2)
         ev3.Sound.speak("Now I will drive in " + str(length) + "circles")
         time.sleep(3)
