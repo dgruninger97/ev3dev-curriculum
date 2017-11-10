@@ -16,10 +16,6 @@ class PcDelegate(object):
 def main():
     pc_delegate = PcDelegate()
     mqtt_client = com.MqttClient(pc_delegate)
-    pc_delegate.mqtt_client = mqtt_client
-    mqtt_client.connect_to_ev3()
-    pc_delegate = PcDelegate()
-    mqtt_client = com.MqttClient(pc_delegate)
     mqtt_client.connect_to_ev3("mosquitto.csse.rose-hulman.edu", 3)
 
     root = tkinter.Tk()

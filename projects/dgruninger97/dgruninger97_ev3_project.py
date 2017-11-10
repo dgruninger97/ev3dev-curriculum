@@ -38,14 +38,26 @@ class MyDelegate(object):
         if LED_color_entry == "BLACK":
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+        if color_to_seek == "Black":
+            color_to_seek = 1
+        if color_to_seek == "Blue":
+            color_to_seek = 2
+        if color_to_seek == "Green":
+            color_to_seek = 3
+        if color_to_seek == "Yellow":
+            color_to_seek = 4
+        if color_to_seek == "Red":
+            color_to_seek = 5
+        if color_to_seek == "White":
+            color_to_seek = 6
         self.robot.left_motor.run_forever(speed_sp=300)
         self.robot.right_motor.run_forever(speed_sp=300)
-        while True:
-            if self.robot.color_sensor.color == color_to_seek:
-                self.robot.left_motor.stop()
-                self.robot.right_motor.stop()
-                break
-            time.sleep(.01)
+        while self.robot.color_sensor.color != COLOR_NAMES[color_to_seek]:
+            print(color_to_seek)
+            print(self.robot.color_sensor.color)
+            time.sleep(0.01)
+        self.robot.left_motor.stop()
+        self.robot.right_motor.stop()
         ev3.Sound.speak("Found " + color_to_seek)
         time.sleep(2)
         ev3.Sound.speak("Now I will drive in " + str(length) + "circles")
