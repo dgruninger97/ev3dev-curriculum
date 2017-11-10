@@ -23,8 +23,21 @@ class MyDelegate(object):
         length = len(str(color_to_seek))
         ev3.Sound.speak("Seeking " + color_to_seek)
         time.sleep(2)
-        ev3.Leds.set_color(ev3.Leds.LEFT, LED_color_entry)
-        ev3.Leds.set_color(ev3.Leds.RIGHT, LED_color_entry)
+        if LED_color_entry == "RED":
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
+            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
+        if LED_color_entry == "ORANGE":
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.ORANGE)
+            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.ORANGE)
+        if LED_color_entry == "AMBER":
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.AMBER)
+            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.AMBER)
+        if LED_color_entry == "YELLOW":
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.YELLOW)
+            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.YELLOW)
+        if LED_color_entry == "BLACK":
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
         self.robot.left_motor.run_forever(speed_sp=300)
         self.robot.right_motor.run_forever(speed_sp=300)
         while True:
