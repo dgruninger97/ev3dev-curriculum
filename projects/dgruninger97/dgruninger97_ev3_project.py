@@ -20,58 +20,64 @@ class MyDelegate(object):
             time.sleep(.1)
 
     def drive_to_color_and_do_circles(self, color_to_seek, LED_color_entry):
-        length = len(str(color_to_seek))
-        ev3.Sound.speak("Seeking " + color_to_seek)
-        time.sleep(2)
-        if LED_color_entry == "RED":
-            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
-            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
-        if LED_color_entry == "ORANGE":
-            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.ORANGE)
-            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.ORANGE)
-        if LED_color_entry == "AMBER":
-            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.AMBER)
-            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.AMBER)
-        if LED_color_entry == "YELLOW":
-            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.YELLOW)
-            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.YELLOW)
-        if LED_color_entry == "BLACK":
-            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
-            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
-        if color_to_seek == "Black":
-            color_to_seek = 1
-        if color_to_seek == "Blue":
-            color_to_seek = 2
-        if color_to_seek == "Green":
-            color_to_seek = 3
-        if color_to_seek == "Yellow":
-            color_to_seek = 4
-        if color_to_seek == "Red":
-            color_to_seek = 5
-        if color_to_seek == "White":
-            color_to_seek = 6
-        self.robot.left_motor.run_forever(speed_sp=300)
-        self.robot.right_motor.run_forever(speed_sp=300)
-        while True:
-            print(color_to_seek)
-            print(self.robot.color_sensor.color)
-            if self.robot.color_sensor.color == color_to_seek:
-                break
-            time.sleep(0.01)
-        self.robot.left_motor.stop()
-        self.robot.right_motor.stop()
-        ev3.Sound.speak("Found " + COLOR_NAMES[color_to_seek])
-        time.sleep(2)
-        ev3.Sound.speak("Now I will drive in " + str(length) + "circles")
-        time.sleep(3)
-        self.robot.left_motor.run_forever(speed_sp=700)
-        self.robot.right_motor.run_forever(speed_sp=200)
-        drive_time = 8.25 * length
-        time.sleep(drive_time)
-        self.robot.left_motor.stop()
-        self.robot.right_motor.stop()
-        ev3.Sound.speak("Wow, I am dizzy")
+        time.sleep(5)
+        while not self.robot.touch_sensor.is_pressed:
+            length = len(str(color_to_seek))
+            ev3.Sound.speak("Seeking " + color_to_seek)
+            time.sleep(2)
+            if LED_color_entry == "RED":
+                ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
+                ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
+            if LED_color_entry == "ORANGE":
+                ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.ORANGE)
+                ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.ORANGE)
+            if LED_color_entry == "AMBER":
+                ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.AMBER)
+                ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.AMBER)
+            if LED_color_entry == "YELLOW":
+                ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.YELLOW)
+                ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.YELLOW)
+            if LED_color_entry == "BLACK":
+                ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+                ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+            if color_to_seek == "Black":
+                color_to_seek = 1
+            if color_to_seek == "Blue":
+                color_to_seek = 2
+            if color_to_seek == "Green":
+                color_to_seek = 3
+            if color_to_seek == "Yellow":
+                color_to_seek = 4
+            if color_to_seek == "Red":
+                color_to_seek = 5
+            if color_to_seek == "White":
+                color_to_seek = 6
+            self.robot.left_motor.run_forever(speed_sp=300)
+            self.robot.right_motor.run_forever(speed_sp=300)
+            while True:
+                if self.robot.color_sensor.color == color_to_seek:
+                    break
+                time.sleep(0.01)
+            self.robot.left_motor.stop()
+            self.robot.right_motor.stop()
+            ev3.Sound.speak("Found " + COLOR_NAMES[color_to_seek])
+            time.sleep(2)
+            ev3.Sound.speak("Now I will drive in " + str(length) + "circles")
+            time.sleep(3)
+            self.robot.left_motor.run_forever(speed_sp=700)
+            self.robot.right_motor.run_forever(speed_sp=200)
+            drive_time = 8.25 * length
+            time.sleep(drive_time)
+            self.robot.left_motor.stop()
+            self.robot.right_motor.stop()
+            ev3.Sound.speak("Wow, I am dizzy")
+            time.sleep(2)
+            play_wav_file()
 
+        self.robot.stop()
+        self.robot.left_motor.stop()
+        self.robot.right_motor.stop()
+        ev3.Sound.speak("Goodbye, sorry I couldn't finish my circles")
 def main():
     print("--------------------------------------------")
     print(" Drive to the color")
@@ -106,7 +112,10 @@ def main():
     #
     # print("Goodbye!")
     # ev3.Sound.speak("Goodbye").wait()
-
+def play_wav_file():
+    ev3.Sound.play("/home/robot/csse120/assets/sounds/awesome_pcm.wav")
+# def play_wav_file2():
+#     ev3.Sound.play("/home/robot/csse120/assets/sounds/IntroEyeoftheTiger.wav")
 
 # ----------------------------------------------------------------------
 # Event handlers
