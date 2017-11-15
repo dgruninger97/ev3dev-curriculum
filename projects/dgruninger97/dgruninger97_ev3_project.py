@@ -20,6 +20,7 @@ class MyDelegate(object):
             time.sleep(.1)
 
     def drive_to_color_and_do_circles(self, color_to_seek, LED_color_entry):
+        btn = ev3.Button
         time.sleep(5)
         while not self.robot.touch_sensor.is_pressed:
             length = len(str(color_to_seek))
@@ -70,10 +71,12 @@ class MyDelegate(object):
             time.sleep(drive_time)
             self.robot.left_motor.stop()
             self.robot.right_motor.stop()
+            if length % 2 == 0:
+                play_wav_file()
+            if length % 1 == 0:
+                play_wav_file2()
+            time.sleep(10)
             ev3.Sound.speak("Wow, I am dizzy")
-            time.sleep(2)
-            play_wav_file()
-
         self.robot.stop()
         self.robot.left_motor.stop()
         self.robot.right_motor.stop()
@@ -96,7 +99,7 @@ def main():
     robot = robo.Snatch3r()
     dc = DataContainer()
 
-    #
+
     # # For our standard shutdown button.
     # btn = ev3.Button()
     # # DONE: 2. Uncomment the lines below to setup event handlers for these buttons.
@@ -105,17 +108,17 @@ def main():
     # btn.on_left = lambda state: drive_to_color_and_do_circles(state, robot, ev3.ColorSensor.COLOR_BLACK)
     # btn.on_right = lambda state: drive_to_color_and_do_circles(state, robot, ev3.ColorSensor.COLOR_WHITE)
     # btn.on_backspace = lambda state: handle_shutdown(state, dc)
-    #
-    # while dc.running:
-    #     btn.process()
-    #     time.sleep(0.01)
-    #
-    # print("Goodbye!")
-    # ev3.Sound.speak("Goodbye").wait()
+
+    while dc.running:
+        btn.process()
+        time.sleep(0.01)
+
+    print("Goodbye!")
+    ev3.Sound.speak("Goodbye").wait()
 def play_wav_file():
     ev3.Sound.play("/home/robot/csse120/assets/sounds/awesome_pcm.wav")
-# def play_wav_file2():
-#     ev3.Sound.play("/home/robot/csse120/assets/sounds/IntroEyeoftheTiger.wav")
+def play_wav_file2():
+    ev3.Sound.play("/home/robot/csse120/assets/sounds/trumpets.wav")
 
 # ----------------------------------------------------------------------
 # Event handlers
