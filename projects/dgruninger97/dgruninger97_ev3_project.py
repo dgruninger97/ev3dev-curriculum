@@ -22,7 +22,7 @@ class MyDelegate(object):
     def drive_to_color_and_do_circles(self, color_to_seek, LED_color_entry):
         btn = ev3.Button
         time.sleep(5)
-        while not self.robot.touch_sensor.is_pressed:
+        while True:
             length = len(str(color_to_seek))
             ev3.Sound.speak("Seeking " + color_to_seek)
             time.sleep(2)
@@ -75,7 +75,7 @@ class MyDelegate(object):
                 play_wav_file()
             if length % 1 == 0:
                 play_wav_file2()
-            time.sleep(10)
+            time.sleep(15)
             ev3.Sound.speak("Wow, I am dizzy")
         self.robot.stop()
         self.robot.left_motor.stop()
@@ -91,6 +91,11 @@ def main():
     print("--------------------------------------------")
     ev3.Sound.speak("Drive to the color and then drive in circles").wait()
     print("Press Back to exit this program.")
+    btn = ev3.Button()
+    btn.on_up = lambda state: drive_to_color(state, robot, ev3.ColorSensor.COLOR_RED)
+    btn.on_down = lambda state: drive_to_color(state, robot, ev3.ColorSensor.COLOR_BLUE)
+    btn.on_left = lambda state: drive_to_color(state, robot, ev3.ColorSensor.COLOR_BLACK)
+    btn.on_right = lambda state: drive_to_color(state, robot, ev3.ColorSensor.COLOR_WHITE)
     my_delegate = MyDelegate()
     mqtt_client = com.MqttClient(my_delegate)
     my_delegate.mqtt_client = mqtt_client
@@ -101,20 +106,28 @@ def main():
 
 
     # # For our standard shutdown button.
-    # btn = ev3.Button()
-    # # DONE: 2. Uncomment the lines below to setup event handlers for these buttons.
-    # btn.on_up = lambda state: drive_to_color_and_do_circles(state, robot, ev3.ColorSensor.COLOR_RED)
-    # btn.on_down = lambda state: drive_to_color_and_do_circles(state, robot, ev3.ColorSensor.COLOR_BLUE)
-    # btn.on_left = lambda state: drive_to_color_and_do_circles(state, robot, ev3.ColorSensor.COLOR_BLACK)
-    # btn.on_right = lambda state: drive_to_color_and_do_circles(state, robot, ev3.ColorSensor.COLOR_WHITE)
-    # btn.on_backspace = lambda state: handle_shutdown(state, dc)
-
+    btn.on_backspace = lambda state: handle_shutdown(state, dc)
+    btn.on_backspace = lambda state: handle_shutdown(state, dc)
     while dc.running:
         btn.process()
         time.sleep(0.01)
 
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
+
+def drive_to_color(button_state, robot, color_to_seek):
+
+    if button_state:
+        ev3.Sound.speak("Seeking " + COLOR_NAMES[color_to_seek]).wait()
+        robot.left_motor.run_forever(speed_sp=300)
+        robot.right_motor.run_forever(speed_sp=300)
+        while True:
+            if robot.color_sensor.color == color_to_seek:
+                robot.left_motor.stop()
+                robot.right_motor.stop()
+                break
+            time.sleep(.01)
+        ev3.Sound.speak("Found " + COLOR_NAMES[color_to_seek]).wait()
 def play_wav_file():
     ev3.Sound.play("/home/robot/csse120/assets/sounds/awesome_pcm.wav")
 def play_wav_file2():
