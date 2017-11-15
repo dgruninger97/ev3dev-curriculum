@@ -89,7 +89,6 @@ def follow_the_line(robot, white_level, black_level):
             robot.turn_degrees(30, 300)
             if robot.touch_sensor.is_pressed == 1:
                 break
-        if robot.touch_sensor.is_pressed == 1:
             robot.stop()
             break
 
